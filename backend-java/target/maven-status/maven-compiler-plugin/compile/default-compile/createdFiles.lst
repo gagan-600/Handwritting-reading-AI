@@ -1,0 +1,4 @@
+com\aihandwriting\controller\UploadController.class
+com\aihandwriting\service\OCRService.class
+com\aihandwriting\HandwritingBackendApplication.class
+com\aihandwriting\service\AIService.class
