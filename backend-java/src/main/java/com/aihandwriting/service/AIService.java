@@ -258,4 +258,5 @@ public class AIService {
     }
 
     // Removed old simple fallback; use buildAgentFallback for consistent schema.
+    //it is in json format now
 }
