@@ -1,0 +1,5 @@
+﻿
+frontend/node_modules/
+node_modules/
+backend-java/target/
+*.jar
