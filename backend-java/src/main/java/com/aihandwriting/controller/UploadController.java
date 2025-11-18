@@ -9,6 +9,8 @@ import org.springframework.web.multipart.MultipartFile;
 
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.aihandwriting.model.UploadRecord;
+import com.aihandwriting.repository.UploadRecordRepository;
 
 import java.io.File;
 import java.io.FileOutputStream;
@@ -21,6 +23,7 @@ public class UploadController {
 
     private final OCRService ocrService;
     private final AIService aiService;
+    private final UploadRecordRepository uploadRecordRepository;
     private final ObjectMapper mapper = new ObjectMapper();
 
     @PostMapping("/upload")
@@ -39,8 +42,16 @@ public class UploadController {
             String structuredJson = aiService.extractStructuredData(extractedText);
             JsonNode structuredNode = mapper.readTree(structuredJson);
 
-            // Return the structured node directly as the response body
-            return ResponseEntity.ok(structuredNode);
+                // Persist upload and AI result to DB
+                UploadRecord record = UploadRecord.builder()
+                    .fileName(file.getOriginalFilename())
+                    .extractedText(extractedText)
+                    .structuredJson(structuredJson)
+                    .build();
+                UploadRecord saved = uploadRecordRepository.save(record);
+
+                // Return the structured node directly as the response body
+                return ResponseEntity.ok(structuredNode);
 
         } catch (Exception e) {
             e.printStackTrace();

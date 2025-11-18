@@ -23,7 +23,7 @@ function App() {
         </main>
 
         <footer className="mt-8 text-center text-xs text-gray-400">
-          Built with a Java backend 
+          Built by Gagan 
         </footer>
       </div>
     </div>
